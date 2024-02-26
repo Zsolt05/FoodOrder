@@ -1,0 +1,137 @@
+[
+  {
+    "name": "Chicken Caesar Salad",
+    "type": "Salad",
+    "price": 1200,
+    "calories": 350,
+    "protein": 25,
+    "carbohydrates": 15,
+    "fat": 20
+  },
+  {
+    "name": "Margherita Pizza",
+    "type": "Pizza",
+    "price": 1500,
+    "calories": 800,
+    "protein": 12,
+    "carbohydrates": 35,
+    "fat": 30
+  },
+  {
+    "name": "Grilled Salmon",
+    "type": "Seafood",
+    "price": 1800,
+    "calories": 400,
+    "protein": 30,
+    "carbohydrates": 10,
+    "fat": 25
+  },
+  {
+    "name": "Vegetarian Stir-Fry",
+    "type": "Vegetarian",
+    "price": 1000,
+    "calories": 300,
+    "protein": 15,
+    "carbohydrates": 25,
+    "fat": 15
+  },
+  {
+    "name": "Beef Burger",
+    "type": "Burger",
+    "price": 1300,
+    "calories": 600,
+    "protein": 20,
+    "carbohydrates": 30,
+    "fat": 35
+  },
+  {
+    "name": "Pasta Carbonara",
+    "type": "Pasta",
+    "price": 1100,
+    "calories": 500,
+    "protein": 18,
+    "carbohydrates": 40,
+    "fat": 22
+  },
+  {
+    "name": "Greek Salad",
+    "type": "Salad",
+    "price": 1000,
+    "calories": 250,
+    "protein": 12,
+    "carbohydrates": 20,
+    "fat": 18
+  },
+  {
+    "name": "Shrimp Scampi",
+    "type": "Seafood",
+    "price": 2000,
+    "calories": 450,
+    "protein": 28,
+    "carbohydrates": 15,
+    "fat": 30
+  },
+  {
+    "name": "Veggie Wrap",
+    "type": "Wrap",
+    "price": 850,
+    "calories": 300,
+    "protein": 10,
+    "carbohydrates": 30,
+    "fat": 15
+  },
+  {
+    "name": "Chicken Alfredo",
+    "type": "Pasta",
+    "price": 1200,
+    "calories": 550,
+    "protein": 22,
+    "carbohydrates": 35,
+    "fat": 25
+  },
+  {
+    "name": "Mushroom Risotto",
+    "type": "Risotto",
+    "price": 1600,
+    "calories": 400,
+    "protein": 14,
+    "carbohydrates": 45,
+    "fat": 20
+  },
+  {
+    "name": "Turkey Club Sandwich",
+    "type": "Sandwich",
+    "price": 900,
+    "calories": 400,
+    "protein": 18,
+    "carbohydrates": 25,
+    "fat": 20
+  },
+  {
+    "name": "Quinoa Salad",
+    "type": "Salad",
+    "price": 1100,
+    "calories": 320,
+    "protein": 15,
+    "carbohydrates": 30,
+    "fat": 18
+  },
+  {
+    "name": "Hawaiian Poke Bowl",
+    "type": "Bowl",
+    "price": 1400,
+    "calories": 500,
+    "protein": 25,
+    "carbohydrates": 40,
+    "fat": 22
+  },
+  {
+    "name": "Vegetable Lasagna",
+    "type": "Lasagna",
+    "price": 1300,
+    "calories": 450,
+    "protein": 20,
+    "carbohydrates": 35,
+    "fat": 28
+  }
+]
