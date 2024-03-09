@@ -16,22 +16,15 @@ namespace FoodOrder.API.Controllers
         [HttpGet]
         public IActionResult GetJsonFile()
         {
-            try
-            {
-                var filePath = Path.Combine(_hostingEnvironment.ContentRootPath, "food.json");
+            var filePath = Path.Combine(_hostingEnvironment.ContentRootPath, "food-test.json");
 
-                if (!System.IO.File.Exists(filePath))
-                {
-                    return NotFound();
-                }
-
-                var json = System.IO.File.ReadAllText(filePath);
-                return Content(json, "application/json");
-            }
-            catch (Exception ex)
+            if (!System.IO.File.Exists(filePath))
             {
-                return StatusCode(500, $"Internal server error: {ex}");
+                return NotFound();
             }
+
+            var json = System.IO.File.ReadAllText(filePath);
+            return Content(json, "application/json");
         }
     }
 }

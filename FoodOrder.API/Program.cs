@@ -1,5 +1,6 @@
 using FoodOrder.API.Middlewares;
 using FoodOrder.Core.Services;
+using FoodOrder.Core.Services.Init;
 using FoodOrder.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -17,7 +18,9 @@ namespace FoodOrder.API
 
             // Add services to the container.
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            builder.Services.AddScoped<FoodInit>();
             builder.Services.AddScoped<IAuthService, AuthService>();
+            builder.Services.AddScoped<IFoodService, FoodService>();
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -50,7 +53,8 @@ namespace FoodOrder.API
             using (var scope = app.Services.CreateScope())
             {
                 var ctx = scope.ServiceProvider.GetRequiredService<FoodOrderDbContext>();
-                ctx.Database.Migrate();
+                ctx.Database.Migrate(); 
+                scope.ServiceProvider.GetRequiredService<FoodInit>().Init().Wait();
             }
 
             app.UseCors(x => x
