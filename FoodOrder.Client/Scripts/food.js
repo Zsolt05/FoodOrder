@@ -1,7 +1,7 @@
 // Frissíti az oldalt a modell alapján
 function updatePage(items) {
     var productListHtml = "";
-    items.forEach(function(item) {
+    items.forEach(function (item) {
         productListHtml += `
         <div class="card mt-3">
           <div class="card-body">
@@ -25,13 +25,15 @@ function updatePagination(model) {
 
 // Oldalváltás eseménykezelő
 async function changePage(page) {
-    var model = await getData("food?pageNumber="+page+"&pageSize=4");
+    var model = await getData("food?pageNumber=" + page + "&pageSize=4");
     updatePage(model.items);
     updatePagination(model);
 }
 
-async function onLoadFoodTable()
-{
+async function onLoadFoodTable() {
     // Kezdeti oldal betöltése
     await changePage(1);
+    var userLabel = document.getElementById("lblUserName");
+    var user = JSON.parse(localStorage.getItem("data"));
+    userLabel.innerHTML = "Bejelentkezve, mint " + user.firstName;
 }
