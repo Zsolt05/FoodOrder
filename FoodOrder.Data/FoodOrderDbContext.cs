@@ -8,5 +8,7 @@ namespace FoodOrder.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Food> Foods { get; set; }
         public DbSet<FoodCategory> FoodCategories { get; set; }
+        public DbSet<Cart> Carts { get; set; }
+        public DbSet<CartFood> CartFoods { get; set; }
     }
 }

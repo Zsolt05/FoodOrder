@@ -2,12 +2,14 @@
 using FoodOrder.Core.Models;
 using FoodOrder.Core.Models.Food;
 using FoodOrder.Core.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FoodOrder.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class FoodController : ControllerBase
     {
         private readonly IFoodService _foodService;

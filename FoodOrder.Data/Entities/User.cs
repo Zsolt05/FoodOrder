@@ -11,5 +11,6 @@ namespace FoodOrder.Data.Entities
         public string FirstName { get; set; }
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
+        public virtual List<Cart> Carts { get; set; }
     }
 }

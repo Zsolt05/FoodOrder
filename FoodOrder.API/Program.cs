@@ -21,6 +21,7 @@ namespace FoodOrder.API
             builder.Services.AddScoped<FoodInit>();
             builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddScoped<IFoodService, FoodService>();
+            builder.Services.AddScoped<ICartService, CartService>();
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
