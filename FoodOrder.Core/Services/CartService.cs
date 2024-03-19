@@ -110,9 +110,9 @@ namespace FoodOrder.Core.Services
                 .Take(pageSize)
                 .Select(cf => new FoodOrderDto
                 {
-                    CartFoodId = cf.Food.Id,
+                    FoodId = cf.Food.Id,
                     FoodName = cf.Food.Name,
-                    Price = cf.Food.Price * cf.Quantity,
+                    Price = cf.Food.Price,
                     Quantity = cf.Quantity
                 })
                 .ToListAsync();
