@@ -1,8 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using System.Net;
+﻿using System.Net;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace FoodOrder.API.Middlewares
 {
@@ -20,7 +17,6 @@ namespace FoodOrder.API.Middlewares
         {
             try
             {
-
                 await _next(httpContext);
             }
             catch (Exception ex)

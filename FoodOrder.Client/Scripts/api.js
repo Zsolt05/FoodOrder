@@ -1,4 +1,4 @@
-var defaultUrl = "http://localhost:5200/api/";
+var defaultUrl = "https://localhost:6200/api/";
 
 async function postData(url = "", data = {}, needAuth = true) {
     // Default options are marked with *
@@ -9,7 +9,7 @@ async function postData(url = "", data = {}, needAuth = true) {
         credentials: "same-origin", // include, *same-origin, omit
         headers: {
             "Content-Type": "application/json",
-            //Authorization: "bearer " + (needAuth ? JSON.parse(localStorage.getItem("data")).token : null),
+            Authorization: "bearer " + (needAuth ? JSON.parse(localStorage.getItem("data")).token : null),
         },
         redirect: "follow", // manual, *follow, error
         referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
@@ -35,7 +35,7 @@ async function getData(url = "", needAuth = true) {
         credentials: "same-origin", // include, *same-origin, omit
         headers: {
             "Content-Type": "application/json",
-            //Authorization: "Bearer " + (needAuth ? JSON.parse(localStorage.getItem("data")).token : null),
+            Authorization: "Bearer " + (needAuth ? JSON.parse(localStorage.getItem("data")).token : null),
         },
         redirect: "follow", // manual, *follow, error
         referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
