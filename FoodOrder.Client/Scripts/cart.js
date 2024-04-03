@@ -68,9 +68,13 @@ async function loadCart() {
     var foods = result.items;
     clearCart();
     var cartQuantity = document.getElementsByClassName('cart-quantity')[0];
-    cartQuantity.textContent = foods.length;
+    cartQuantity.textContent = foods?.length ?? 0;
     var cartRows = document.getElementsByClassName('cart-rows')[0];
     var total = 0;
+	if(!foods)
+	{
+		return;
+	}
     for (const food of foods) {
         total = total + (food.price * food.quantity)
         var cartRow = document.createElement('div');

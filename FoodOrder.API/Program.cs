@@ -19,6 +19,7 @@ namespace FoodOrder.API
             // Add services to the container.
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             builder.Services.AddScoped<FoodInit>();
+            builder.Services.AddScoped<RoleInit>();
             builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddScoped<IFoodService, FoodService>();
             builder.Services.AddScoped<ICartService, CartService>();
@@ -54,14 +55,15 @@ namespace FoodOrder.API
             using (var scope = app.Services.CreateScope())
             {
                 var ctx = scope.ServiceProvider.GetRequiredService<FoodOrderDbContext>();
-                ctx.Database.Migrate(); 
+                ctx.Database.Migrate();
                 scope.ServiceProvider.GetRequiredService<FoodInit>().Init().Wait();
+                scope.ServiceProvider.GetRequiredService<RoleInit>().Init().Wait();
             }
 
             app.UseCors(x => x
-                            .AllowAnyOrigin()
-                            .AllowAnyMethod()
-                            .AllowAnyHeader());
+                        .AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader());
 
             app.UseMiddleware<ExceptionMiddleware>();
 

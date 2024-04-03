@@ -37,5 +37,6 @@ async function onLoadFoodTable() {
     await changePage(1);
     var userLabel = document.getElementById("lblUserName");
     var user = JSON.parse(localStorage.getItem("data"));
+	console.log(user);
     userLabel.innerHTML = "Bejelentkezve, mint " + user.firstName;
 }

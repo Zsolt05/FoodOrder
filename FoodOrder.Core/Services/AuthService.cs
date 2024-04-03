@@ -1,4 +1,5 @@
-﻿using FoodOrder.Core.Models.User;
+﻿using FoodOrder.Core.Constans;
+using FoodOrder.Core.Models.User;
 using FoodOrder.Data;
 using FoodOrder.Data.Entities;
 using Microsoft.AspNetCore.Http;
@@ -33,7 +34,10 @@ namespace FoodOrder.Core.Services
 
         public async Task<AuthResponseDto> Login(UserLoginDto loginDto)
         {
-            var user = await _context.Users!.FirstOrDefaultAsync(x => x.Email.ToLower().Equals(loginDto.Email.ToLower()))
+            var user = await _context.Users!
+                .Include(u=>u.Roles)
+                    .ThenInclude(ur=>ur.Role)
+                .FirstOrDefaultAsync(x => x.Email.ToLower().Equals(loginDto.Email.ToLower()))
                 ?? throw new Exception("Rossz felhasználónév vagy jelszó");
 
             if (VerifyPasswordHash(loginDto.Password, user.PasswordHash!, user.PasswordSalt!))
@@ -63,7 +67,11 @@ namespace FoodOrder.Core.Services
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
 
+            var userRole = await _context.Roles!.FirstOrDefaultAsync(role => role.Name.Equals(Roles.User)) ?? throw new Exception("Nem található a szerepkör");
+
             await _context.Users!.AddAsync(user);
+            await _context.SaveChangesAsync();
+            await _context.UserRoles!.AddAsync(new UserRole { UserId = user.Id, RoleId = userRole.Id });
             await _context.SaveChangesAsync();
         }
 
@@ -76,13 +84,15 @@ namespace FoodOrder.Core.Services
 
         private string CreateToken(User user)
         {
-            List<Claim> claims = new List<Claim>
-            {
+            List<Claim> claims =
+            [
                 new Claim(ClaimTypes.Email, user.Email),
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
-            };
+            ];
 
-            var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_configuration.GetSection("Token").Value));
+            user.Roles.ForEach(role => claims.Add(new Claim(ClaimTypes.Role, role.Role.Name)));
+
+            var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_configuration.GetSection("Token").Value ?? throw new Exception("Token kulcs nincs megadva")));
 
             var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 

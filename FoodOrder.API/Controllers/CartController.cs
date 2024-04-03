@@ -1,4 +1,5 @@
-﻿using FoodOrder.Core.Models;
+﻿using FoodOrder.Core.Constans;
+using FoodOrder.Core.Models;
 using FoodOrder.Core.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -17,6 +18,7 @@ namespace FoodOrder.API.Controllers
             _cartService = cartService;
         }
 
+        [Authorize(Roles = $"{Roles.Admin},{Roles.User}")]
         [HttpPost("add")]
         public async Task<IActionResult> AddToCart(int productId, int quantity)
         {
@@ -46,6 +48,7 @@ namespace FoodOrder.API.Controllers
             return Ok(cartFoods);
         }
 
+        [Authorize(Roles = Roles.User)]
         [HttpPost("finish")]
         public async Task<IActionResult> FinishOrder()
         {

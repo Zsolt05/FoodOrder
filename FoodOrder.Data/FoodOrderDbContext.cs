@@ -10,5 +10,12 @@ namespace FoodOrder.Data
         public DbSet<FoodCategory> FoodCategories { get; set; }
         public DbSet<Cart> Carts { get; set; }
         public DbSet<CartFood> CartFoods { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<UserRole> UserRoles { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<UserRole>().HasKey(ur => new { ur.UserId, ur.RoleId });
+        }
     }
 }
