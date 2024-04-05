@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace FoodOrder.API.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize]
+    [Authorize(Roles = $"{Roles.User}")]
     [ApiController]
     public class CartController : ControllerBase
     {
@@ -18,7 +18,6 @@ namespace FoodOrder.API.Controllers
             _cartService = cartService;
         }
 
-        [Authorize(Roles = $"{Roles.Admin},{Roles.User}")]
         [HttpPost("add")]
         public async Task<IActionResult> AddToCart(int productId, int quantity)
         {
@@ -48,7 +47,6 @@ namespace FoodOrder.API.Controllers
             return Ok(cartFoods);
         }
 
-        [Authorize(Roles = Roles.User)]
         [HttpPost("finish")]
         public async Task<IActionResult> FinishOrder()
         {
