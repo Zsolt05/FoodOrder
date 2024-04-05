@@ -1,42 +1,52 @@
-// Frissíti az oldalt a modell alapján
-function updatePage(items) {
-    var productListHtml = "";
-    items.forEach(function (item) {
-        productListHtml += `
-        <div class="card mt-3">
-          <div id="${item.id}" class="card-body">
-            <h5 class="card-title food-name">${item.name}</h5>
-            <p class="card-text food-price">Ár: ${item.price}</p>
-            <p class="card-text food-category">Kategória: ${item.category.name}</p>
-            <button class="add-to-cart">Kosárhoz adás</button>
-          </div>
-        </div>`;
-    });
-    document.getElementById("product-list").innerHTML = productListHtml;
-}
+let id = 0;
+document.addEventListener('DOMContentLoaded', async function () {
+    // Populate categories select
+    await fetchCategories();
 
-// Frissíti a lapozó gombokat
-function updatePagination(model) {
-    var paginationHtml = "";
-    for (var i = 1; i <= model.totalPages; i++) {
-        paginationHtml += `<li class="page-item ${i === model.currentPage ? 'active' : ''}"><a class="page-link" href="#" onclick="changePage(${i})">${i}</a></li>`;
+    // Check if URL has an ID parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    id = urlParams.get('id');
+    if (id) {
+        document.title = "Étel módosítása- FoodOrder";
     }
-    document.getElementById("pagination").innerHTML = paginationHtml;
+
+    // Form submit event listener
+    document.getElementById('foodForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+        const formData = new FormData(this);
+        createFood(formData);
+    });
+});
+
+// Function to fetch food categories
+async function fetchCategories() {
+    let categories = await getData('food/category?pageNumber=1&pageSize=10');
+    const categorySelect = document.getElementById('category');
+    categories.items.forEach(category => {
+        const option = document.createElement('option');
+        option.value = category.id;
+        option.textContent = category.name;
+        categorySelect.appendChild(option);
+    });
 }
 
-// Oldalváltás eseménykezelő
-async function changePage(page) {
-    var model = await getData("food?pageNumber=" + page + "&pageSize=4");
-    updatePage(model.items);
-    updatePagination(model);
-    await initCart();
-}
-
-async function onLoadFoodTable() {
-    // Kezdeti oldal betöltése
-    await changePage(1);
-    var userLabel = document.getElementById("lblUserName");
-    var user = JSON.parse(localStorage.getItem("data"));
-	console.log(user);
-    userLabel.innerHTML = "Bejelentkezve, mint " + user.firstName;
+// Function to create food
+async function createFood(formData) {
+    if (id !== 0)
+    {
+        await putData('food', formData);
+    }
+    fetch('/api/food/create', {
+        method: 'POST',
+        body: formData
+    })
+        .then(response => {
+            if (response.ok) {
+                alert('Food created successfully!');
+                window.location.href = '/'; // Redirect to homepage after successful creation
+            } else {
+                throw new Error('Failed to create food');
+            }
+        })
+        .catch(error => console.error('Error creating food:', error));
 }
