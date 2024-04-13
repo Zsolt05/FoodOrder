@@ -41,14 +41,15 @@ async function fetchCategories() {
 
 // Function to create/update food
 async function createFood(formData) {
-    console.log(formData);
     if (id !== 0) {
         await putData(`food/${id}`, formData);
         alert("Sikeres módosítás!");
+        sendMessage(`${formData.name}`)
         window.location.href = 'index.html';
     } else {
         await postData('food', formData);
         alert("Sikeres hozzáadás!");
+        sendMessage(`${formData.name}`)
         window.location.href = 'index.html';
     }
 }
