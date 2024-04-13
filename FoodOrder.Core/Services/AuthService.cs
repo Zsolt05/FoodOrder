@@ -46,7 +46,8 @@ namespace FoodOrder.Core.Services
                 {
                     Email = user.Email,
                     FirstName = user.FirstName,
-                    Token = CreateToken(user)
+                    Token = CreateToken(user),
+                    IsAdmin = user.Roles.Any(role => role.Role.Name.Equals(Roles.Admin))
                 };
             }
             else

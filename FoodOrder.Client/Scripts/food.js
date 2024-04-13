@@ -1,27 +1,36 @@
 let id = 0;
 document.addEventListener('DOMContentLoaded', async function () {
-    // Populate categories select
+    // Fetch food categories
     await fetchCategories();
-
     // Check if URL has an ID parameter
     const urlParams = new URLSearchParams(window.location.search);
     id = urlParams.get('id');
     if (id) {
         document.title = "Étel módosítása- FoodOrder";
+        const food = await getData(`food/${id}`);
+        document.getElementById('name').value = food.name;
+        document.getElementById('price').value = food.price;
+        document.getElementById('categoryId').value = food.category.id;
     }
-
     // Form submit event listener
     document.getElementById('foodForm').addEventListener('submit', function (event) {
         event.preventDefault();
         const formData = new FormData(this);
-        createFood(formData);
+        const createFoodDto = {};
+        formData.forEach((value, key) => {
+            createFoodDto[key] = value;
+        });
+        if (createFoodDto.categoryId === "") {
+            alert("Kérlek válassz kategóriát!");
+        }
+        createFood(createFoodDto);
     });
 });
 
 // Function to fetch food categories
 async function fetchCategories() {
     let categories = await getData('food/category?pageNumber=1&pageSize=10');
-    const categorySelect = document.getElementById('category');
+    const categorySelect = document.getElementById('categoryId');
     categories.items.forEach(category => {
         const option = document.createElement('option');
         option.value = category.id;
@@ -30,23 +39,16 @@ async function fetchCategories() {
     });
 }
 
-// Function to create food
+// Function to create/update food
 async function createFood(formData) {
-    if (id !== 0)
-    {
-        await putData('food', formData);
+    console.log(formData);
+    if (id !== 0) {
+        await putData(`food/${id}`, formData);
+        alert("Sikeres módosítás!");
+        window.location.href = 'index.html';
+    } else {
+        await postData('food', formData);
+        alert("Sikeres hozzáadás!");
+        window.location.href = 'index.html';
     }
-    fetch('/api/food/create', {
-        method: 'POST',
-        body: formData
-    })
-        .then(response => {
-            if (response.ok) {
-                alert('Food created successfully!');
-                window.location.href = '/'; // Redirect to homepage after successful creation
-            } else {
-                throw new Error('Failed to create food');
-            }
-        })
-        .catch(error => console.error('Error creating food:', error));
 }

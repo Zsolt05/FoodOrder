@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="hu">
+<html lang="hu" class="h-100" data-bs-theme="auto">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,7 +11,7 @@
 <header class="mb-3">
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">FoodOrder</a>
+            <a class="navbar-brand" href="index.html">FoodOrder</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
                     aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -44,18 +44,19 @@
             </div>
             <div class="form-group">
                 <label for="name">Név:</label>
-                <input type="text" class="form-control" id="name" required>
+                <input type="text" class="form-control" name="name" id="name" required>
             </div>
             <div class="form-group">
                 <label for="price">Ár:</label>
-                <input type="number" class="form-control" id="price" step="0.01" required>
+                <input type="number" class="form-control" name="price" id="price" step="0.01" required>
             </div>
             <div class="form-group">
-                <label for="category">Kategória:</label>
-                <select class="form-control" id="category" name="category" required>
-                    <option value="">Select category</option>
+                <label for="categoryId">Kategória:</label>
+                <select class="form-control" id="categoryId" name="categoryId" required>
+                    <option value="">Válassz kategóriát</option>
                 </select>
             </div>
+            <br>
             <button type="submit" class="btn btn-primary">Mentés</button>
         </form>
     </div>

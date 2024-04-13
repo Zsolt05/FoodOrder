@@ -50,6 +50,16 @@ namespace FoodOrder.API.Controllers
             return Ok(foodDtos);
         }
 
+        [HttpGet("{id:int}")]
+        [Authorize(Roles = Roles.Admin)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(FoodDto))]
+        public async Task<IActionResult> GetFood(int id)
+        {
+            var food = await _foodService.GetFood(id);
+            var foodDto = _mapper.Map<FoodDto>(food);
+            return Ok(foodDto);
+        }
+
         [HttpPost]
         [Authorize(Roles = Roles.Admin)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PagedResult<FoodDto>))]

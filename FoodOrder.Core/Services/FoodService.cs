@@ -9,6 +9,7 @@ namespace FoodOrder.Core.Services
 {
     public interface IFoodService
     {
+        Task<Food> GetFood(int id);
         Task<PagedResult<Food>> GetFoods(int pageNumber, int pageSize);
         Task<PagedResult<FoodCategory>> GetCategories(int pageNumber, int pageSize);
         Task<PagedResult<Food>> CreateFood(CreateFoodDto createFoodDto);
@@ -56,6 +57,11 @@ namespace FoodOrder.Core.Services
             var categories = await _context.FoodCategories.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
             var result = categories.Create(await _context.FoodCategories.CountAsync(), pageNumber, pageSize);
             return result;
+        }
+
+        public async Task<Food> GetFood(int id)
+        {
+            return await _context.Foods.Include(f => f.Category).FirstOrDefaultAsync(f => f.Id == id) ?? throw new Exception("Étel nem található");
         }
 
         public async Task<PagedResult<Food>> GetFoods(int pageNumber, int pageSize)

@@ -9,15 +9,15 @@
     background: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1))
 }
 
-.mt-5
-{
-    margin-top: 3.6rem!important;
+.mt-5 {
+    margin-top: 3.6rem !important;
 }
 
 .cart-row {
     border-bottom: 1px solid #ccc;
     padding: 10px 0;
 }
+
 .food-info {
     margin-left: 20px;
 }
@@ -60,12 +60,6 @@
     transform: translateX(0);
 }
 
-.product-image {
-    margin-bottom: 1em;
-    max-width: 100%;
-    display: block;
-}
-
 .add-to-cart {
     background-color: black;
     color: white;
@@ -80,6 +74,19 @@
     cursor: pointer;
     font-weight: bolder;
     font-size: 1.2rem
+}
+
+.delete-food {
+    background-color: red;
+    color: white;
+    position: absolute;
+    right: 0;
+    top: 0;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    font-weight: bolder;
+    font-size: 1rem
 }
 
 .cart-modal-overlay {
@@ -149,11 +156,11 @@
     transform: translateY(5px);
 }
 
-.active>.page-link, .page-link.active{
+.active > .page-link, .page-link.active {
     z-index: 0;
 }
 
-@media (max-width: 1000px){
+@media (max-width: 1000px) {
     .cart-modal {
         width: 100vw;
     }
