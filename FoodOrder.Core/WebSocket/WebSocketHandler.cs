@@ -29,7 +29,7 @@ namespace FoodOrder.Core.WebSocket
 
             await socket.SendAsync(buffer: new ArraySegment<byte>(array: Encoding.UTF8.GetBytes(message),
                                                                     offset: 0,
-                                                                    count: message.Length),
+                                                                    count: Encoding.UTF8.GetBytes(message).Length),
                                     messageType: WebSocketMessageType.Text,
                                     endOfMessage: true,
                                     cancellationToken: CancellationToken.None);
