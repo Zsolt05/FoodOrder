@@ -8,6 +8,7 @@ namespace FoodOrder.Core.Profiles
         {
             CreateMap<Data.Entities.Food, Models.Food.FoodDto>()
                 .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Category));
+            CreateMap<Models.Food.CreateFoodDto, Data.Entities.Food>();
             CreateMap<Data.Entities.FoodCategory, Models.Food.FoodCategoryDto>();
         }
     }

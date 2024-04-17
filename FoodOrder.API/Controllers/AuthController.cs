@@ -20,6 +20,7 @@ namespace FoodOrder.API.Controllers
         }
 
         [HttpPost("login")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AuthResponseDto))]
         public async Task<IActionResult> Login(UserLoginDto loginDto)
         {
             var response = await _authService.Login(loginDto);

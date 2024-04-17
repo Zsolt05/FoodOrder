@@ -1,42 +1,55 @@
-// Frissíti az oldalt a modell alapján
-function updatePage(items) {
-    var productListHtml = "";
-    items.forEach(function (item) {
-        productListHtml += `
-        <div class="card mt-3">
-          <div id="${item.id}" class="card-body">
-            <h5 class="card-title food-name">${item.name}</h5>
-            <p class="card-text food-price">Ár: ${item.price}</p>
-            <p class="card-text food-category">Kategória: ${item.category.name}</p>
-            <button class="add-to-cart">Kosárhoz adás</button>
-          </div>
-        </div>`;
-    });
-    document.getElementById("product-list").innerHTML = productListHtml;
-}
-
-// Frissíti a lapozó gombokat
-function updatePagination(model) {
-    var paginationHtml = "";
-    for (var i = 1; i <= model.totalPages; i++) {
-        paginationHtml += `<li class="page-item ${i === model.currentPage ? 'active' : ''}"><a class="page-link" href="#" onclick="changePage(${i})">${i}</a></li>`;
+let id = 0;
+document.addEventListener('DOMContentLoaded', async function () {
+    // Fetch food categories
+    await fetchCategories();
+    // Check if URL has an ID parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    id = urlParams.get('id');
+    if (id) {
+        document.title = "Étel módosítása- FoodOrder";
+        const food = await getData(`food/${id}`);
+        document.getElementById('name').value = food.name;
+        document.getElementById('price').value = food.price;
+        document.getElementById('categoryId').value = food.category.id;
     }
-    document.getElementById("pagination").innerHTML = paginationHtml;
+    // Form submit event listener
+    document.getElementById('foodForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+        const formData = new FormData(this);
+        const createFoodDto = {};
+        formData.forEach((value, key) => {
+            createFoodDto[key] = value;
+        });
+        if (createFoodDto.categoryId === "") {
+            alert("Kérlek válassz kategóriát!");
+        }
+        createFood(createFoodDto);
+    });
+});
+
+// Function to fetch food categories
+async function fetchCategories() {
+    let categories = await getData('food/category?pageNumber=1&pageSize=10');
+    const categorySelect = document.getElementById('categoryId');
+    categories.items.forEach(category => {
+        const option = document.createElement('option');
+        option.value = category.id;
+        option.textContent = category.name;
+        categorySelect.appendChild(option);
+    });
 }
 
-// Oldalváltás eseménykezelő
-async function changePage(page) {
-    var model = await getData("food?pageNumber=" + page + "&pageSize=4");
-    updatePage(model.items);
-    updatePagination(model);
-    await initCart();
-}
-
-async function onLoadFoodTable() {
-    // Kezdeti oldal betöltése
-    await changePage(1);
-    var userLabel = document.getElementById("lblUserName");
-    var user = JSON.parse(localStorage.getItem("data"));
-	console.log(user);
-    userLabel.innerHTML = "Bejelentkezve, mint " + user.firstName;
+// Function to create/update food
+async function createFood(formData) {
+    if (id !== 0) {
+        await putData(`food/${id}`, formData);
+        alert("Sikeres módosítás!");
+        sendMessage(`${formData.name}`)
+        window.location.href = 'index.html';
+    } else {
+        await postData('food', formData);
+        alert("Sikeres hozzáadás!");
+        sendMessage(`${formData.name}`)
+        window.location.href = 'index.html';
+    }
 }
