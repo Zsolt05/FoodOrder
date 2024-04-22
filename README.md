@@ -1,5 +1,9 @@
 # Rendszerfejlesztés beadandó
 
+### Adatbázis:
+![image](https://github.com/Zsolt05/FoodOrder/assets/36923364/7f624e9b-40b0-470f-af08-9f7696c4a9ef)
+
+
 ### Felhasználók:
 |       Email       | Jelszó  |
 |-------------------|:-------:|
